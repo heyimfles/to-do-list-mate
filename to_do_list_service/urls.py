@@ -22,5 +22,5 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", include("to_do_list_app.urls", namespace="to_do_list_app")),
+    path("", include("to_do_list_app.urls", namespace="to_do_list")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

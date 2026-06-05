@@ -1,6 +1,58 @@
 {% extends "base.html" %}
 {% block content %}
 
+<h1 class="mb-4">
+  TODO List
+</h1>
 
+{% if task_queryset %}
+
+  {% for task in task_queryset %}
+
+    <div class="list-group">
+      <div class="list-group-item flex-column align-items-start">
+
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1 text-bold">
+            {{ task.content }}
+            {% if task.completion_status == True %}
+              <span class="text-success">Done</span>
+            {% elif task.completion_status == False %}
+              <span class="text-danger">Not done</span>
+            {% endif %}
+          </h5>
+        </div>
+
+        <p class="mb-1 small">
+          {{ task.created_at }}
+          {{% if task.deadline %}
+            <span class="text-danger">Deadline: {{ task.deadline }}</span>
+          {% endif %}
+        </p>
+
+
+        <p class="mb-1 text-secondary text-bold">
+          Tags:
+          {% if task.tags.all %}
+            {% for tag in task.tags %}
+              {{ tag.name }}
+            {% endfor %}
+          {% else %}
+          None
+          {% endif %}
+        </p>
+
+      </div>
+    </div>
+  {% endfor %}
+
+{% else %}
+  <p>No tasks yet. Create one!</p>
+
+{% endif %}
+
+<a class="btn btn-primary" href="{% url 'to_do_list:task_create' %}">
+  Add task
+</a>
 
 {% endblock %}

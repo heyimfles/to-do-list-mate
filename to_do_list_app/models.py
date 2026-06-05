@@ -16,7 +16,10 @@ class Task(models.Model):
         auto_now_add=True
     )
 
-    deadline = models.DateTimeField()
+    deadline = models.DateTimeField(
+        blank=True,
+        null=True
+    )
 
     completion_status = models.BooleanField()
 

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="text-bold">
+  Tags
+</h1>
+
+<a
+    class="btn btn-primary"
+    href="#">
+  Add
+</a>
+
+{% if tags %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Update</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for tag in tags %}
+    <tr>
+      <td>{{ tag.name }}</td>
+      <td>
+        <a
+            href="#"
+            class="btn btn-secondary"
+        >
+          Update
+        </a>
+      </td>
+      <td>
+        <a
+            href="#"
+            class="btn btn-secondary"
+        >
+          Delete
+        </a>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No tags yet. Add one!</p>
+{% endif %}
+{% endblock %}

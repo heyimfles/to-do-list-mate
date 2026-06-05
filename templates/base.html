@@ -12,11 +12,31 @@
   >
 </head>
 <body>
-  {% block navbar %}
-  {% endblock %}
+  <div class="container-fluid">
+    <div class="row py-3">
+      <div class="col-3 order-2" id="sticky-sidebar">
+        {% block sidebar %}
+          <nav class="nav flex-column">
+            <a
+                class="nav-link border"
+                href="/"
+            >
+              Home
+            </a>
+            <a
+                class="nav-link border"
+                href="{% url 'to_do_list:tags_list' %}"
+            >
+              Tags
+            </a>
+          </nav>
+        {% endblock %}
+      </div>
+    </div>
 
-  <main role="main" class="container">
-    {% block content %}
-    {% endblock %}
-  </main>
+    <div class="col" id="main">
+      {% block content %}
+      {% endblock %}
+    </div>
+  </div>
 </body>
