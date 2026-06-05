@@ -2,18 +2,45 @@
 {% block content %}
 
 <div class="container">
-  <form method="POST" action="">
+
+  <h1 class="display-4 mb-4">
+    {{ object|yesno:"Update Task,Create Task" }}
+  </h1>
+
+  <form method="post">
     {% csrf_token %}
 
-    {{ form.as_p }}
+    <div class="form-group">
+      <label for="{{ form.content.id_for_label }}">
+        Content
+      </label>
+      {{ form.content }}
+    </div>
 
-    <input
-        type="submit"
-        value="Submit"
-        class="btn btn-primary"
-    >
+    <div class="form-group">
+      <label for="{{ form.deadline.id_for_label }}">
+        Deadline
+      </label>
+      {{ form.deadline }}
+    </div>
 
+    <div class="form-group">
+      <label for="{{ form.tags.id_for_label }}">
+        Tags
+      </label>
+      {{ form.tags }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+      Save
+    </button>
+
+    <a href="{% url 'to_do_list:home_page' %}"
+       class="btn btn-secondary">
+      Cancel
+    </a>
   </form>
+
 </div>
 
 {% endblock %}

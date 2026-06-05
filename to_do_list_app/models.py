@@ -6,6 +6,9 @@ class Tag(models.Model):
         max_length=255
     )
 
+    def __str__(self):
+        return self.name
+
 
 class Task(models.Model):
     content = models.CharField(
@@ -21,7 +24,9 @@ class Task(models.Model):
         null=True
     )
 
-    completion_status = models.BooleanField()
+    completion_status = models.BooleanField(
+        default=False
+    )
 
     tags = models.ManyToManyField(
         Tag,
