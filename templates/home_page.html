@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-5">
+  <h1 class="display-4 font-weight-bold mb-0">
+    TODO list
+  </h1>
+
+  <a
+      class="btn btn-primary btn-lg"
+      href="{% url 'to_do_list:task_create' %}"
+  >
+    Add task
+  </a>
+</div>
+
+{% if task_queryset %}
+
+  {% for task in task_queryset %}
+
+  <div class="border-bottom pb-4 mb-4">
+
+    <div class="d-flex justify-content-between">
+
+      <div>
+        <h3 class="font-weight-bold">
+          {{ task.content }}
+
+          {% if task.completion_status == True %}
+              <span class="text-success">
+                Done
+              </span>
+          {% elif task.completion_status == False %}
+              <span class="text-danger">
+                Not done
+              </span>
+          {% endif %}
+        </h3>
+
+        <p class="text-dark mt-4">
+
+          Created: {{ task.created_at }}
+
+          {% if task.deadline %}
+            <span class="text-danger ml-2">
+              Deadline: {{ task.deadline }}
+            </span>
+          {% endif %}
+        </p>
+
+        <p class="text-muted h4 mt-4">
+
+          Tags:
+
+          {% for tag in task.tags.all %}
+            {{ tag.name }}
+          {% empty %}
+            None
+          {% endfor %}
+
+          <a href="{% url 'to_do_list:task_update' task.id %}"
+             class="ml-2">
+            Update
+          </a>
+
+          <a href="{% url 'to_do_list:task_delete' task.id %}">
+            Delete
+          </a>
+        </p>
+
+        </div>
+
+        <form method="POST">
+          {% csrf_token %}
+
+          <input type="hidden" name="task_id" value="{{ task.id }}">
+
+          {% if task.completion_status %}
+            <button type="submit"
+                    class="btn btn-secondary btn-lg">
+              Undo
+            </button>
+          {% else %}
+            <button type="submit"
+                    class="btn btn-success btn-lg">
+              Complete
+            </button>
+          {% endif %}
+        </form>
+
+      </div>
+
+  </div>
+
+    {% endfor %}
+
+    {% else %}
+
+    <p>No tasks yet. Create one!</p>
+
+    {% endif %}
+  </div>
+
+{% endblock %}
