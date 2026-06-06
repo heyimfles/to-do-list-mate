@@ -34,3 +34,6 @@ class Task(models.Model):
         blank=True,
         null=True,
     )
+
+    def __str__(self):
+        return f"{self.content} (completed: {self.completion_status})"

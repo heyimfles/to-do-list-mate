@@ -1,7 +1,6 @@
 from django.urls import path
 
 from to_do_list_app.views import (
-    home_page,
     TaskCreateView,
     TaskUpdateView,
     TaskDeleteView,
@@ -9,13 +8,14 @@ from to_do_list_app.views import (
     TagsCreateView,
     TagsUpdateView,
     TagsDeleteView,
+    HomePageView,
 )
 
 
 urlpatterns = [
     path(
         "",
-        home_page,
+        HomePageView.as_view(),
         name="home_page",
     ),
     path(

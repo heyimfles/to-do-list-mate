@@ -6,20 +6,27 @@ from to_do_list_app.forms import TaskForm, TagForm
 from to_do_list_app.models import *
 
 
-def home_page(request):
-    if request.method == "POST":
+class HomePageView(generic.TemplateView):
+    template_name = "home_page.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["task_queryset"] = Task.objects.all().order_by(
+            "completion_status",
+            "-created_at"
+        )
+
+        return context
+
+    @staticmethod
+    def post(request, *args, **kwargs):
         task_id = request.POST.get("task_id")
         task = Task.objects.get(pk=task_id)
         task.completion_status = not task.completion_status
         task.save()
 
-    task_queryset = Task.objects.all().order_by("completion_status", "-created_at")
-
-    context = {
-        "task_queryset": task_queryset,
-    }
-
-    return render(request, "home_page.html", context)
+        return redirect(reverse_lazy("to_do_list:home_page"))
 
 
 class TaskCreateView(generic.CreateView):
